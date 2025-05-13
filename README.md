@@ -35,6 +35,7 @@ cd ecommerce-backend
 ### 2. Install dependencies
 ```bash
 npm install
+```
 ### 3. Set up environment variables
 Create a .env file and fill in your credentials:
 
@@ -47,10 +48,13 @@ DB_NAME=ecommerce_db
 
 EMAIL_USER=youremail@example.com
 EMAIL_PASS=yourEmailPassword
+```
 ### 4. Start the server
 ```bash
 npm start
+```
 ### 📚 API Documentation
 Swagger UI is available at:
 ```bash
 http://localhost:3000/api-docs
+```
