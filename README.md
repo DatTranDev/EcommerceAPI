@@ -30,7 +30,7 @@ This is a RESTful backend for an e-commerce platform built using **Node.js**, **
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/ecommerce-backend.git
+git clone https://github.com/DatTranDev/EcommerceAPI.git
 cd ecommerce-backend
 ```
 ### 2. Install dependencies
