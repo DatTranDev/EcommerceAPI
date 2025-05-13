@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: E-Commerce API
+  version: 1.0.0
+  description: API for managing products and orders in an e-commerce platform.
+
+servers:
+  - url: http://localhost:3000/api/v1
+
+paths:
+  /categories:
+    get:
+      summary: Get all product categories
+      tags:
+        - Categories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+
+  /products/{categoryId}:
+    get:
+      summary: Get products by category
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: categoryId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Products in category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /products/search:
+    get:
+      summary: Search products with filters
+      tags:
+        - Products
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Search term (e.g. product name)
+        - in: query
+          name: category
+          schema:
+            type: integer
+        - in: query
+          name: minPrice
+          schema:
+            type: number
+        - in: query
+          name: maxPrice
+          schema:
+            type: number
+      responses:
+        '200':
+          description: List of matching products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+
+  /orders:
+    post:
+      summary: Create a new order and process payment
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+
+    CreateOrderRequest:
+      type: object
+      properties:
+        userId:
+          type: integer
+        shippingMethodId:
+          type: integer
+        paymentMethodId:
+          type: integer
+        shippingAddressId:
+          type: integer
+        statusId:
+          type: integer
+        voucherIds:
+          type: array
+          items:
+            type: integer
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              productItemId:
+                type: integer
+              quantity:
+                type: integer
+              storeId:
+                type: integer
+              price:
+                type: number
+
+    OrderResponse:
+      type: object
+      properties:
+        orderId:
+          type: integer
+        total:
+          type: number
+        discount:
+          type: number
+        shippingFee:
+          type: number
